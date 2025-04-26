@@ -1,6 +1,6 @@
 from confluent_kafka.serialization import SerializationContext, MessageField
 from confluent_kafka.schema_registry import SchemaRegistryClient
-from confluent_kafka.schema_registry.avro import AvroSerializer
+from confluent_kafka.schema_registry.avro import AvroSerializer, AvroDeserializer
 
 schema_path = "user.avsc"
 schema_registry_url = "http://localhost:8081"
@@ -18,6 +18,7 @@ avro_serializer = AvroSerializer(schema_registry_client,schema_str)
 user1 = {"name": "Ben", "favorite_number": 7, "favorite_color": "red"}
 user2 = {"name": "Alice", "favorite_number": 42}
 
+# Serialization
 byte1 = avro_serializer(user1, SerializationContext(kafka_topic, MessageField.VALUE))
 byte2 = avro_serializer(user1, SerializationContext(kafka_topic, MessageField.VALUE))
 
@@ -25,3 +26,10 @@ with open(output_file_path, "wb") as output_file:
     output_file.write(byte1 + byte2)
 
 print(f"Serialized data written to {output_file_path}")
+
+# Deserialization
+avro_deserializer = AvroDeserializer(schema_registry_client, schema_str)
+with open(output_file_path, "rb") as input_file:
+    data = input_file.read()
+    deserialized_data = avro_deserializer(data, SerializationContext(kafka_topic, MessageField.VALUE))
+    print(f"Deserialized data: {deserialized_data}")

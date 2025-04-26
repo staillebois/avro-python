@@ -29,7 +29,7 @@ This project demonstrates how to serialize data into Avro format using the Confl
     ```bash
     python deser.py
     ```
-3. The serialized Avro data will be written to user.avro.
+3. The serialized Avro data will be written to `user.avro`, and the deserialized data will be printed to the console.
 
 ## Avro Schema
 
@@ -57,4 +57,17 @@ The script serializes the following user data:
 
 ## Output
 
-The serialized Avro data is written to user.avro. You can use tools like avro-tools or a compatible library to deserialize and inspect the data.
+### Serialization
+
+The serialized Avro data is written to `user.avro`. You can use tools like `avro-tools` or a compatible library to inspect the serialized data.
+
+### Deserialization
+
+The script reads the serialized data from `user.avro` and deserializes it back into Python objects. The deserialized data is printed to the console in the following format:
+
+```plaintext
+Deserialized data: {'name': 'Ben', 'favorite_number': 7, 'favorite_color': 'red'}
+```
+```plaintext
+Deserialized data: {'name': 'Alice', 'favorite_number': 42, 'favorite_color': None}
+```
