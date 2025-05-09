@@ -1,9 +1,22 @@
-{"namespace": "example.avro",
- "type": "record",
- "name": "User",
- "fields": [
-     {"name": "name", "type": "string"},
-     {"name": "favorite_number",  "type": ["int", "null"]},
-     {"name": "favorite_color", "type": ["string", "null"]}
- ]
+{
+  "namespace": "example.avro",
+  "type": "record",
+  "name": "UserBulk",
+  "fields": [
+    {
+      "name": "users",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "User",
+          "fields": [
+            {"name": "name", "type": "string"},
+            {"name": "favorite_number",  "type": ["int", "null"]},
+            {"name": "favorite_color", "type": ["string", "null"]}
+        ]
+      }
+      }
+    }
+  ]
 }

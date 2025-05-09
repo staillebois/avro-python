@@ -15,15 +15,18 @@ with open(schema_path) as f:
 
 avro_serializer = AvroSerializer(schema_registry_client,schema_str)
 
-user1 = {"name": "Ben", "favorite_number": 7, "favorite_color": "red"}
-user2 = {"name": "Alice", "favorite_number": 42}
+users = {
+     "users": [
+          {"name": "Ben", "favorite_number": 7, "favorite_color": "red"},
+          {"name": "Alice", "favorite_number": 42, "favorite_color": "blue"}
+        ]
+    }
 
 # Serialization
-byte1 = avro_serializer(user1, SerializationContext(kafka_topic, MessageField.VALUE))
-byte2 = avro_serializer(user1, SerializationContext(kafka_topic, MessageField.VALUE))
+bytes = avro_serializer(users, SerializationContext(kafka_topic, MessageField.VALUE))
 
 with open(output_file_path, "wb") as output_file:
-    output_file.write(byte1 + byte2)
+    output_file.write(bytes)
 
 print(f"Serialized data written to {output_file_path}")
 
